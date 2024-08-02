@@ -1,0 +1,15 @@
+<!--CDN서버에 있는 Vue3라이브러리를 받아서 만든 기본 페이지 -->
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script> <!--서버에 올라가 있는 Vue3라이브러리를 CDN을 통해 다운 -->
+
+<div id="app"> {{ message }}</div> <!-- 반응성 변수에 대해 화면에 렌더링-->
+
+<script>
+    Vue.createApp({ // Vue 변수명을 통해 라이브러리 함수들에 대해 접근
+        data(){ // Vue 인스턴스(앱(최상위)에서) 사용할 데이터
+            return {
+                message : 'Hello Vue3!!'
+            }
+        }
+    }).mount('#app'); // id가 app인 Dom 요소에 Vue 앱을 마운트 -> 해당 DOM요소내에서 Vue 애플리케이션이 로드된다.
+
+</script>
