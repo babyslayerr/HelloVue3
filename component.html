@@ -1,0 +1,18 @@
+<!--CDN으로 컴포넌트 등록해보는 페이지-->
+<div id="app">
+    <app-header></app-header> <!--CDN환경에선 케밥케이스 적용필요 대소문자 구분 불가 --> <!-- SFC 레벨로(.vue파일) 들어오는순간 파스칼 케이스 작성 -->
+</div>
+
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script>
+    // 뷰 instance 생성
+    Vue.createApp({
+        // 뷰 인스턴스에서 사용할 컴포넌트 정의
+        components : {
+            'app-header' : {
+                template : '<h1>컴포넌트 등록!!!</h1>'
+            }
+        }
+    }).mount("#app") // id가 app인 dom객체에 vue앱 마운트
+
+</script>
