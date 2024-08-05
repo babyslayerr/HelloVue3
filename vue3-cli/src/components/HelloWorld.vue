@@ -1,58 +1,41 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br>
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint" target="_blank" rel="noopener">eslint</a></li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
-      <li><a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a></li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li><a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a></li>
-      <li><a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">vue-devtools</a></li>
-      <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
-    </ul>
-  </div>
+  <!-- submit.prevent는 폼의 기본동작을 막는 js에서 event.preventDefault와 같은 동작을 한다 submit함수 즉 제출전 reload가 실행되서(reload전에 폼전송도 실행됨) 함수가 동작되지 않기 때문에 설정해야한다-->
+  <form v-on:submit.prevent="submit()"> <!--v-on은 DOM 이벤트를듣고 실행할 js를 정의할수있다. -->
+    <label for="username">username</label>
+    <input v-bind="username"/> <!--v-bind는 템플릿에가 값 변경 불가(일방향, v-model은 양방향 -->
+
+    <label for="password" >password</label>
+    <input v-model="password"/>
+    <button type="submit">전송</button>
+  </form>
 </template>
 
 <script>
-export default {
-  name: 'HelloWorld',
-  props: {
-    msg: String
-  }
-}
-</script>
+  import axios from 'axios'; // axios 라이브러리 import
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
-</style>
+  export default {
+    // Component에서 사용할 객체 선언
+    data() {
+      return {
+        username: '',
+        password: ''
+      }
+    },
+    methods: {
+      // form의 기본 형태를 막고 메소드로 대체(서버 전송 메소드)
+      submit() {
+        // Post로 보낼 객체
+        const data = {
+          username : this.username,
+          password : this.password
+        }
+
+        // axios를 통한 서버 통신 ( Fake API 사용, 가상서버)
+        axios.post("https://jsonplaceholder.typicode.com/posts",data)
+            .then(response =>{
+              console.log(response)
+            })
+      }
+    },
+  }
+</script>
