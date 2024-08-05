@@ -11,23 +11,24 @@
 </template>
 
 <script>
-  import axios from 'axios'; // axios 라이브러리 import
+  // axios 라이브러리 import
+  import axios from 'axios';
+  // composition api를 쓰기위한 import, 변수선언시 사용
+  import {ref} from "vue";
 
   export default {
-    // Component에서 사용할 객체 선언
-    data() {
-      return {
-        username: '',
-        password: ''
-      }
-    },
-    methods: {
+    // vue3에서 도입된 composition api사용
+    setup(){
+      // 변수 선언 ref함수안은 초기화될 값
+      let username = ref('');
+      let password = ref('');
+
       // form의 기본 형태를 막고 메소드로 대체(서버 전송 메소드)
-      submit() {
+      const submit = () => {
         // Post로 보낼 객체
         const data = {
-          username : this.username,
-          password : this.password
+          username : username.value, // 위에서 ref안의 초기값에 접근을 위해서 value필드 사용
+          password : password.value
         }
 
         // axios를 통한 서버 통신 ( Fake API 사용, 가상서버)
@@ -36,6 +37,30 @@
               console.log(response)
             })
       }
-    },
+      return {username, password, submit} // return 한 값들은 template 및 메소드 영역에서 다 접근가능
+    }
+    // Component에서 사용할 객체 선언
+    // data() {
+    //   return {
+    //     username: '',
+    //     password: ''
+    //   }
+    // },
+    // methods: {
+    //   // form의 기본 형태를 막고 메소드로 대체(서버 전송 메소드)
+    //   submit() {
+    //     // Post로 보낼 객체
+    //     const data = {
+    //       username : this.username,
+    //       password : this.password
+    //     }
+    //
+    //     // axios를 통한 서버 통신 ( Fake API 사용, 가상서버)
+    //     axios.post("https://jsonplaceholder.typicode.com/posts",data)
+    //         .then(response =>{
+    //           console.log(response)
+    //         })
+    //   }
+    // },
   }
 </script>
